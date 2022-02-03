@@ -9,7 +9,7 @@ public class Room {
     private int roomCapacity;
 
     /**
-     * placeholder.
+     * Initializes Room
      */
     public Room() {
         this.setCourseName(null);
