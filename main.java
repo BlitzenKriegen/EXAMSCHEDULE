@@ -10,8 +10,8 @@ import java.util.Scanner;
  */
 
 public class main {
-    static String classFile = "courses7.txt";
-    static String roomFile = "rooms3.txt";
+    static String classFile = "courses.txt";
+    static String roomFile = "room.txt";
 
     /**
      * testing.
