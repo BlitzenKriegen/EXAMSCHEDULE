@@ -2,7 +2,8 @@
  *  Comp project with the funny graphs.
  * @author Kiril Sikov
  *  Class: Comp 3649
- *  Project: Timeslot calculator
+ *  Project: Timeslot calculator. This file defines the Room
+ *  object, which serves to hold a room's name and its capacity.
  */
 public class Room {
     private String courseName;
