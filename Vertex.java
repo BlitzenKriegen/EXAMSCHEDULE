@@ -1,33 +1,30 @@
-public class Vertex {
-	private String className;
-	//todo: add int number of students
+import java.util.Objects;
+import java.util.ArrayList;
 
-	public Vertex(String label) {
-		this.className = label;
-	}
+public class Vertex {
 	
-	public void setVertex(String newName) {
-		this.className = newName;
-	}
-	
-	public String getVertex() {
-		return this.className;
-	}
-	
-	//Overrides hashcode()
-	@Override
-	public int hashCode() {
-		return className.hashCode();
-	}
-	
-	//Overrides equals
-	@Override 
-	public boolean equals(Object o){
-		if (this == o) return true;
-		if (!(o instanceof Vertex)) {
-			return false;
+	  private String className;
+	  private ArrayList < Vertex > adj;
+
+	    public Vertex(String name) {
+	        this.className = name;
+	        adj = new ArrayList<> ();
+	    }
+
+	    public String getName() {
+	        return className;
+	    }
+
+	    public ArrayList < Vertex > getAdjacentVertices() {
+	        return adj;
+	    }
+	    
+	    @Override
+		public String toString() {
+			
+			String cool = className;
+			
+			return cool;
 		}
-		 Vertex vert = (Vertex) o;
-	        return className == vert.className;               
-	}
 }
+
