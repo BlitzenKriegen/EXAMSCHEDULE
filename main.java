@@ -1,4 +1,7 @@
 import java.io.FileInputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -10,43 +13,76 @@ import java.util.Scanner;
  */
 
 public class main {
-    static String classFile = "courses.txt";
-    static String roomFile = "room.txt";
-
+    static String classFile = "courses8.txt";
+    static String roomFile = "rooms3.txt";
     /**
      * testing.
      * @param args placeholder.
      */
     public static void main(String[] args){
+    	int timeSlots;
+    	
         ClassInfo allClasses[] = new ClassInfo[0];
         Room roomInfo[] = new Room[0];
-              
+        
+        Scanner in = new Scanner(System.in); 
+        System.out.println("Enter amount of time slots:");
+        timeSlots = in.nextInt();
+        
+        
         Graph test = new Graph();
         
         allClasses = classFileRead(allClasses);
         roomInfo = roomFileRead(roomInfo);
-        //to do: read an int corresponding to number of timeslots
-        
+       
         fillGraph(test, allClasses);
-        Vertex v1 = new Vertex(allClasses[4].getClassName());
-        System.out.println(test.getGraph().get(v1));
-        //graph subroutine
-        //output
+      
+        int[] timeColor = new int[test.getGraph().size()]; //int array corresponding to timeslots, index of array = index of correspongind vertex in Graph
+        
+        graphColoring(timeSlots, timeColor, test, 0);
+        
+        System.out.println(allClasses.length);
+       
         return;
     }
+    static void graphColoring(int numOfTimeSlots, int[] color, Graph g, int k) {
+    	int size = g.getGraph().size();
+    	//System.out.println(size);
+    	for(int c = 1; c <= numOfTimeSlots; c++) {
+    		if(isSafe(color,g,k,c)) {
+    			color[k] = c;
+    			if(k+1 < size) {
+    				graphColoring(numOfTimeSlots, color, g, k+1);
+    			}		
+    			//else {
+    				//System.out.println(Arrays.toString(color));
+    				//return;
+    			//}
+    		}	
+    		
+    	}
+    	return;
+    }
     
-    /**
-     * fills the graph with vertex corresponding to a className from ClassInfo
-     * and an edge between two vertex if they have a student in the class list in common
-     * @param a graph, g
-     * @param a ClassInfo array, allClasses
-     * @return a filled graph, g
-     */
-    private static Graph fillGraph(Graph g, ClassInfo[] allClasses) {
+    static boolean isSafe(int[] color, Graph g, int k, int c) {
+    	int size = g.getGraph().get(k).getAdjacentVertices().size();
+    	
+    	for(int i = 0; i < size; i++) {
+    		if(c == color[g.getGraph().indexOf(g.getGraph().get(k).getAdjacentVertices().get(i))]) {     //checks if all adjacent nodes of k are different color from c
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+    	
+    }
+    
+    private static void fillGraph(Graph g, ClassInfo[] allClasses) {
     	int size = allClasses.length;
     	
     	for(int i = 0; i < size; i++) {
-    		g.addVertex(allClasses[i].getClassName());
+    		g.addVertex(new Vertex(allClasses[i].getClassName()));
+    		
     	}
     	
     	for(int j = 0; j<size; j++) {
@@ -56,7 +92,9 @@ public class main {
     			}	
     		}
     	}
-		return g;
+    	
+    	
+		
     }
     
     /**
