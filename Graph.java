@@ -36,6 +36,12 @@ public class Graph {
         return this.g;
     }
 
+    public void printGraph() {
+    	 for(int i = 0; i<this.getGraph().size(); i++) {
+         	System.out.println(this.getGraph().get(i) + " : " + this.getGraph().get(i).getAdjacentVertices().toString());
+         }
+         
+    }
 }
 	
 	
