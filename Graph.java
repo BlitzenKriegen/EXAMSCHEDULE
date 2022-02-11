@@ -1,62 +1,62 @@
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 
+/**
+ * class that defines the graph used in the program.
+ * @author Comp Sci Group
+ *
+ */
 public class Graph {
-	
-	private ArrayList<Vertex> g;
 
+    private ArrayList<Vertex> graph;
+
+    /**
+     * Initializes a graph object.
+     */
     public Graph() {
-        g = new ArrayList<> ();
+        graph = new ArrayList<> ();
     }
 
+    /**
+     * Adds an edge to the graph.
+     * @param v1 input 1.
+     * @param v2 input 2.
+     */
     public void addEdge(String v1, String v2) {
-    	int size = g.size();
-    	
-    	for (int i = 0; i<size; i++) {
-    		if(g.get(i).getName() == v1) {
-    			for (int j = 0; j<size; j++) {
-    				if(g.get(j).getName() == v2) {
-    					g.get(i).getAdjacentVertices().add(g.get(j));
-    					g.get(j).getAdjacentVertices().add(g.get(i));
-    				
-    				}
-    			}
-    		}
-    	}
-    	return;
-    }
-    
-    public void addVertex(Vertex v) {
-        g.add(v);
+        int size = graph.size();
+
+        for  (int i = 0; i < size; i++) {
+            if (graph.get(i).getName() == v1) {
+                for  (int j = 0; j < size; j++) {
+                    if (graph.get(j).getName() == v2) {
+                        graph.get(i).getAdjacentVertices().add(graph.get(j));
+                        graph.get(j).getAdjacentVertices().add(graph.get(i));
+                    }
+                }
+            }
+        }
         return;
     }
-    
-    public ArrayList<Vertex> getGraph() {
-        return this.g;
+
+    /**
+     * Adds a vertex to the graph.
+     * @param vert vertex to be added.
+     */
+    public void addVertex(Vertex vert) {
+        graph.add(vert);
+        return;
     }
 
+    public ArrayList<Vertex> getGraph() {
+        return this.graph;
+    }
+
+    /**
+     * Prints the graph.
+     */
     public void printGraph() {
-    	 for(int i = 0; i<this.getGraph().size(); i++) {
-         	System.out.println(this.getGraph().get(i) + " : " + this.getGraph().get(i).getAdjacentVertices().toString());
-         }
-         
+        for (int i = 0; i < this.getGraph().size(); i++) {
+            System.out.println(this.getGraph().get(i) + " : " + this.getGraph().get(i)
+                               .getAdjacentVertices().toString());
+        }
     }
 }
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
