@@ -1,7 +1,4 @@
 import java.io.FileInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -13,110 +10,104 @@ import java.util.Scanner;
  */
 
 public class main {
-    static String classFile = "courses8.txt";
-    static String roomFile = "rooms3.txt";
+    static String classFile = "class.txt";
+    static String roomFile = "room.txt";
+
     /**
      * testing.
      * @param args placeholder.
      */
-    public static void main(String[] args){
-    	int timeSlots;
-    	
+    public static void main(String[] args) {
+        int timeSlots;
+
         ClassInfo allClasses[] = new ClassInfo[0];
-        Room roomInfo[] = new Room[0];
-        
-        Scanner in = new Scanner(System.in); 
+
+        Scanner in = new Scanner(System.in);
         System.out.println("Enter amount of time slots:");
         timeSlots = in.nextInt();
-        
-        
+
         Graph test = new Graph();
-        
+        Room roomInfo[] = new Room[0];
         allClasses = classFileRead(allClasses);
         roomInfo = roomFileRead(roomInfo);
-       
+
         fillGraph(test, allClasses);
-      
-        int[] timeColor = new int[test.getGraph().size()]; //int array corresponding to timeslots, index of array = index of correspongind vertex in Graph
-        
+
+        int[] timeColor = new int[test.getGraph().size()]; /*int array corresponding to timeslots, index of array =
+                                                            index of correspongind vertex in Graph*/
+        in.close();
         graphColoring(timeSlots, timeColor, test, 0);
-        
+
         System.out.println(allClasses.length);
-       
+
         return;
     }
-    static void graphColoring(int numOfTimeSlots, int[] color, Graph g, int k) {
-    	int size = g.getGraph().size();
-    	//System.out.println(size);
-    	for(int c = 1; c <= numOfTimeSlots; c++) {
-    		if(isSafe(color,g,k,c)) {
-    			color[k] = c;
-    			if(k+1 < size) {
-    				graphColoring(numOfTimeSlots, color, g, k+1);
-    			}		
-    			//else {
-    				//System.out.println(Arrays.toString(color));
-    				//return;
-    			//}
-    		}	
-    		
-    	}
-    	return;
+
+    static void graphColoring(int numOfTimeSlots, int[] color, Graph graph, int startingVertex) {
+        int size = graph.getGraph().size();
+        System.out.println(size);
+        for (int c = 1; c <= numOfTimeSlots; c++) {
+            if (isSafe(color,graph,startingVertex,c)) {
+                color[startingVertex] = c;
+                if (startingVertex + 1 < size) {
+                    graphColoring(numOfTimeSlots, color, graph, startingVertex + 1);
+                    //else {
+                    //System.out.println(Arrays.toString(color));
+                    //return;
+                    //}
+                }
+            }
+        }
+        return;
     }
-    
-    static boolean isSafe(int[] color, Graph g, int k, int c) {
-    	int size = g.getGraph().get(k).getAdjacentVertices().size();
-    	
-    	for(int i = 0; i < size; i++) {
-    		if(c == color[g.getGraph().indexOf(g.getGraph().get(k).getAdjacentVertices().get(i))]) {     //checks if all adjacent nodes of k are different color from c
-    			return false;
-    		}
-    	}
-    	
-    	return true;
-    	
+
+    static boolean isSafe(int[] color, Graph graph, int startingVertex, int timeSlot) {
+        int size = graph.getGraph().get(startingVertex).getAdjacentVertices().size();
+
+        for (int i = 0; i < size; i++) {
+            if (timeSlot == color[graph.getGraph().indexOf(graph.getGraph()
+                .get(startingVertex).getAdjacentVertices().get(i))]) {
+                return false;
+            }
+        }
+        return true;
     }
-    
-    private static void fillGraph(Graph g, ClassInfo[] allClasses) {
-    	int size = allClasses.length;
-    	
-    	for(int i = 0; i < size; i++) {
-    		g.addVertex(new Vertex(allClasses[i].getClassName()));
-    		
-    	}
-    	
-    	for(int j = 0; j<size; j++) {
-    		for(int k = j+1; k<size; k++) {
-    			if(!(isUnionEmpty(allClasses[j].getStudents(), allClasses[k].getStudents()))){
-    				g.addEdge(allClasses[j].getClassName(), allClasses[k].getClassName());
-    			}	
-    		}
-    	}
-    	
-    	
-		
+
+    private static void fillGraph(Graph graph, ClassInfo[] allClasses) {
+        int size = allClasses.length;
+
+        for (int i = 0; i < size; i++) {
+            graph.addVertex(new Vertex(allClasses[i].getClassName()));
+        }
+
+        for (int j = 0; j < size; j++) {
+            for (int k = j + 1 ; k < size; k++) {
+                if (!(isUnionEmpty(allClasses[j].getStudents(), allClasses[k].getStudents()))) {
+                    graph.addEdge(allClasses[j].getClassName(), allClasses[k].getClassName());
+                }
+            }
+        }
     }
-    
+
     /**
-     * isUnionEmpty returns a true if the union set of the two arrays are empty
-     * @param arr1
-     * @param arr2
+     * isUnionEmpty returns a true if the union set of the two arrays are empty.
+     * @param arr1 First array
+     * @param arr2 Second array
      * @return boolean
      */
     private static boolean isUnionEmpty(int[] arr1, int[] arr2) {
-    	int size1 = arr1.length;
-    	int size2 = arr2.length;
-    	boolean ans = true;
-    	
-    	for(int i = 0; i < size1 && ans == true; i++) {
-    		for(int j = 0; j < size2 && ans == true; j++) {
-    			if(arr1[i] == arr2[j]) {
-    				ans = false;
-    			}
-    			
-    		}
-    	}
-    	return ans;
+        int size1 = arr1.length;
+        int size2 = arr2.length;
+        boolean ans = true;
+
+        for (int i = 0; i < size1 && ans == true; i++) {
+            for (int j = 0; j < size2 && ans == true; j++) {
+                if (arr1[i] == arr2[j]) {
+                    ans = false;
+                }
+            }
+        }
+        return ans;
     }
 
     private static Room[] roomFileRead(Room[] roomInfo) {
@@ -231,6 +222,6 @@ public class main {
 
         return newList;
     }
-    
+
 
 }
