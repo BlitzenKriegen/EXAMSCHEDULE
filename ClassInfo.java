@@ -1,4 +1,6 @@
-/**
+import java.util.Objects;
+
+/*
  *  Comp project with the funny graphs.
  * @author Kiril Sikov
  *  Class: Comp 3649
@@ -8,7 +10,7 @@ public class ClassInfo {
     private String className = null;
     private int[] students = null;
 
-    /**
+    /*
      * lol.
      */
     public ClassInfo() {
@@ -27,15 +29,20 @@ public class ClassInfo {
     public int[] getStudents() {
         return students;
     }
+    
+    public int getNumberOfStudents() {
+    	if(this.students != null) {
+    		return students.length;
+    	}
+    	else {
+    		return 0;
+    	}
+    }
 
     public void setStudents(int[] students) {
         this.students = students;
     }
 
-    /**
-     * Puts a new student into the class.
-     * @param newStudent the insert to the array
-     */
     public void setStudent(int newStudent) {
         if (this.getStudents() != null) {
             int size = this.getStudents().length + 1;
@@ -52,4 +59,5 @@ public class ClassInfo {
         }
         return;
     }
+   
 }
