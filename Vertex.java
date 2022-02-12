@@ -5,11 +5,18 @@ public class Vertex {
 	
 	  private String className;
 	  private ArrayList < Vertex > adj;
+	  private int numberOfStudents;
 
-	    public Vertex(String name) {
+	    public Vertex(String name, int numStudents) {
 	        this.className = name;
+	        this.numberOfStudents = numStudents;
 	        adj = new ArrayList<> ();
 	    }
+	    
+	    public int getNumStudents() {
+	    	return this.numberOfStudents;
+	    }
+	    
 
 	    public String getName() {
 	        return className;

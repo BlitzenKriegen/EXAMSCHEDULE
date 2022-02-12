@@ -2,19 +2,26 @@
  *  Comp project with the funny graphs.
  * @author Kiril Sikov
  *  Class: Comp 3649
- *  Project: Timeslot calculator. This file defines the Room
- *  object, which serves to hold a room's name and its capacity.
+ *  Project: Timeslot calculator
  */
 public class Room {
     private String courseName;
     private int roomCapacity;
+    private int currentRoomCapacity;
 
     /**
-     * Initializes Room
+     * placeholder.
      */
     public Room() {
         this.setCourseName(null);
         this.setRoomCapacity(0);
+        this.setCurrentRoomCapacity(0);
+    }
+    
+    public Room(String courseName, int roomCapacity, int currRoomCapacity) {
+        this.setCourseName(courseName);
+        this.setRoomCapacity(roomCapacity);
+        this.setCurrentRoomCapacity(currRoomCapacity);
     }
 
     public String getCourseName() {
@@ -28,7 +35,13 @@ public class Room {
     public int getRoomCapacity() {
         return roomCapacity;
     }
+    public int getCurrentRoomCapacity() {
+        return currentRoomCapacity;
+    }
 
+    public void setCurrentRoomCapacity(int roomCapacity) {
+        this.currentRoomCapacity = roomCapacity;
+    }
     public void setRoomCapacity(int roomCapacity) {
         this.roomCapacity = roomCapacity;
     }
@@ -45,19 +58,23 @@ public class Room {
         int whitespacePoint = 0;
         int occupantcy = 0;
         String roomName = "";
+        
 
-        for (int i = 0; (i < input.length()) && chr != ' ';i++) {
+        for (int i = 0; (i < input.length()) && chr != '\t';i++) {
             chr = input.charAt(i);
             whitespacePoint++;
-            if (!(chr == ' ')) {
+            if (!(chr == '\t')) {
                 roomName = roomName + chr;
             }
         }
+        
         for (int i = whitespacePoint; i < input.length(); i++) {
-            chr = input.charAt(i);
+            chr = input.charAt(i);           
             occupantcy = (occupantcy * 10) + Character.getNumericValue(chr);
         }
+       
         this.setCourseName(roomName);
         this.setRoomCapacity(occupantcy);
+        this.setCurrentRoomCapacity(occupantcy);
     }
 }
