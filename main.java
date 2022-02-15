@@ -117,7 +117,6 @@ public class main {
     
     static void graphColoring(int numOfTimeSlots, int[] color, Graph graph, int startingVertex) {
         int size = graph.getGraph().size();
-        System.out.println(size);
         for (int c = 1; c <= numOfTimeSlots; c++) {
             if (isSafe(color,graph,startingVertex,c)) {
                 color[startingVertex] = c;
