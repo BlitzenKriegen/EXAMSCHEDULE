@@ -72,7 +72,7 @@ public class main {
     		   for(int j = 0; j < timeColor.length; j++) {
     			   if(timeColor[j] == i) {
     				   System.out.print(test.getGraph().get(j).toString());
-    				   System.out.println("     " + room);
+    				   System.out.println("     " + courseRooms[j]);
     			   }
     		   }
     		   System.out.println();
