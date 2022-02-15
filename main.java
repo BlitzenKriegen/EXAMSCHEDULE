@@ -38,11 +38,83 @@ public class main {
         in.close();
         graphColoring(timeSlots, timeColor, test, 0);
 
-        System.out.println(allClasses.length);
+        String room = "";
+        String courseRooms[]  = new String[timeColor.length]; //array holding rooms for courses in the same timeSlot
+        
+        //Stores the rooms for all courses in the courseRoom array
+        for(int i = 1; i <= timeSlots; i++) {
+        	for(int j = 0; j < timeColor.length; j++) {
+        		if(timeColor[j] == i) {
+        			room = getRoom(roomInfo,allClasses, test.getGraph().get(j).toString());
+        			if(room.equals("-1")) {
+        				break;
+        			}
+        			courseRooms[j] = room;
+        		}
+        		
+        	}
+        	
+        	if(room.equals("-1")) {
+				break;
+			}
+        	//After every timeSlot sets room Availability to true
+        	for(int k = 0; k < roomInfo.length; k++) {
+        		roomInfo[k].setAvailability(true);
+        	}
+        }
+        
+        if(room.equals("-1")) {
+ 		   System.out.println("Could not create an ideal TimeTable for the given courses.");
+ 	   } else {
+ 		   //Prints the exam Schedule to the Screen
+ 		   for(int i = 1; i <= timeSlots; i++) {
+    		   System.out.println("TimeSlot " + i + ":");
+    		   for(int j = 0; j < timeColor.length; j++) {
+    			   if(timeColor[j] == i) {
+    				   System.out.print(test.getGraph().get(j).toString());
+    				   System.out.println("     " + room);
+    			   }
+    		   }
+    		   System.out.println();
+    	   }
+       
+ 	   }
 
         return;
     }
 
+     /**
+     * Selects a room for a given Course by selecting the class with the lowest capacity that can fit the course students.
+     * @param Rooms array
+     * @param Classes array	
+     * @param Class name 
+     * @return the index from the rooms Array Otherwise -1 if it could not find  a room for the course.
+     */
+    public static String getRoom(Room rooms[], ClassInfo classes[], String className) {
+    	int numOfStuds = 0;
+    	for(int i = 0; i < classes.length; i++) {
+    		if (classes[i].getClassName().equals(className)) {
+    			numOfStuds = classes[i].getStudents().length;
+    		}
+    	}
+    	
+    	int min = 1000;
+    	int index = -1; //index of the desired room
+    	for(int k = 0; k < rooms.length; k++) {
+    		if((rooms[k].getRoomCapacity() >= numOfStuds) && rooms[k].isAvailable()) {
+    			if((rooms[k].getRoomCapacity() - numOfStuds) < min) {
+    				min = rooms[k].getRoomCapacity() - numOfStuds;
+    				index = k;
+    			}
+    		}	
+    	}
+    	if(index == -1) {
+    		return "-1";
+    	}
+    	rooms[index].setAvailability(false);
+    	return rooms[index].getCourseName();
+    }
+    
     static void graphColoring(int numOfTimeSlots, int[] color, Graph graph, int startingVertex) {
         int size = graph.getGraph().size();
         System.out.println(size);
