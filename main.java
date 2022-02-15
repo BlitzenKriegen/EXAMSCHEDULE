@@ -64,7 +64,7 @@ public class main {
         }
         
         if(room.equals("-1")) {
- 		   System.out.println("Could not create an ideal TimeTable for the given courses.");
+ 		   System.out.println("Could not create an ideal Exam Schedule for the given courses.");
  	   } else {
  		   //Prints the exam Schedule to the Screen
  		   for(int i = 1; i <= timeSlots; i++) {
