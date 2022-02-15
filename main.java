@@ -88,7 +88,7 @@ public class main {
      * @param Rooms array
      * @param Classes array	
      * @param Class name 
-     * @return the index from the rooms Array Otherwise -1 if it could not find  a room for the course.
+     * @return the room with the lowest capacity that can fit the course Students Otherwise -1 if it could not find a room for the course.
      */
     public static String getRoom(Room rooms[], ClassInfo classes[], String className) {
     	int numOfStuds = 0;
