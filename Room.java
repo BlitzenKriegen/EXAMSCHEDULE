@@ -55,12 +55,15 @@ public class Room {
         int occupantcy = 0;
         String roomName = "";
 
-        for (int i = 0; (i < input.length()) && chr != ' ';i++) {
+        for (int i = 0; (i < input.length()) && chr != '\t';i++) {
             chr = input.charAt(i);
             whitespacePoint++;
             if (!(chr == ' ')) {
                 roomName = roomName + chr;
             }
+        }
+        if (chr == 't') {
+        	 whitespacePoint++;
         }
         for (int i = whitespacePoint; i < input.length(); i++) {
             chr = input.charAt(i);
