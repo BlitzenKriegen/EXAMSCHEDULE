@@ -8,13 +8,14 @@
 public class Room {
     private String courseName;
     private int roomCapacity;
-
+    private boolean available;
     /**
      * Initializes Room
      */
     public Room() {
         this.setCourseName(null);
         this.setRoomCapacity(0);
+        this.available = true;
     }
 
     public String getCourseName() {
@@ -31,6 +32,14 @@ public class Room {
 
     public void setRoomCapacity(int roomCapacity) {
         this.roomCapacity = roomCapacity;
+    }
+
+    public boolean isAvailable() {
+    	return this.available;
+    }
+    
+    public void setAvailability(boolean val) {
+    	this.available = val;
     }
 
     /**
