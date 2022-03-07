@@ -11,6 +11,8 @@
 %		-We need to implement output of data structures.
 %
 
+:-include('Data_Struct.pl').
+
 % user_intro will simply grab user input for the
 % number of timeslots that will be used for the
 % graph structure. This will likely be revised as
@@ -34,4 +36,4 @@ user_intro:- write('Enter number of timeslots. \n').
 % printed.
 %
 % TODO: Implementation of reading out the graph structure members
-user_output:- write('Schedule of the classes: \n').
+user_outro:- write('Schedule of the classes: \n').
