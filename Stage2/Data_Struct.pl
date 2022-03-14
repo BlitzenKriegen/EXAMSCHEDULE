@@ -8,6 +8,15 @@
 %		-Implement the Room structure.
 %		-Implement the Graph structure.
 
+%IMPORTANT: list_delete and list_insert is code
+%found on the internet. This is purely to get basic
+%operations for list modification going.
+list_delete(X, [X], []).
+list_delete(X,[X|L1], L1).
+list_delete(X, [Y|L2], [Y|L1]) :- list_delete(X,L2,L1).
+
+list_insert(X,L,R) :- list_delete(X,R,L).
+
 % class_info is the data structure that holds
 % the information of both the class name as well
 % as the student list of the class. These will be

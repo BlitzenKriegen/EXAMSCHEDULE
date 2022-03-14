@@ -19,7 +19,7 @@
 % the body of a "main" function.
 %
 % TODO: User input and processing.
-user_intro:- write('Enter number of timeslots. \n').
+user_intro:- see("data.txt"), write('Read worked').
 
 
 % read_file will read in an input file and process it
