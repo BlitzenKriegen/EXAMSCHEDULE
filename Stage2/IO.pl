@@ -16,6 +16,8 @@ read_file(File) :-
 readRec(Stream, String):-
 	get_char(Stream, Ch),
 	write(Ch),
-	Ch = end_of_file,String = [];
-	char_type('\n',Ch),String = [];
-	readRec(Stream, Rest),String=[Ch|Rest].
+	(
+	  Ch = end_of_file,String = [],!,write('here1\n');
+	  Ch = '\n',String = [],!,write('here2\n');
+	  readRec(Stream, Rest),write('here3\n'),String=[Ch|Rest]
+	).
