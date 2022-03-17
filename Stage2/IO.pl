@@ -17,9 +17,18 @@ write_file(File,Text) :-
 read_file(File) :-
 	open(File, read, Stream),
 	readLoop(Stream,Tokens),
+	checkIfEmpty(Tokens),
 	close(Stream),
 	processList(Tokens,CourseList),
 	write(CourseList).
+
+%Checks if input file is empty.
+%Fails if the input is indeed empty.
+checkIfEmpty(X):-
+	length(X,Len),
+	Len > 0,!;
+	write("Error: Empty/Whitespace List!"),fail,!.
+	
 
 %processList takes in a list and cordons
 %its members into elements, taking a list
