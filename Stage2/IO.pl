@@ -1,5 +1,3 @@
-:-include('Data_Struct.pl').
-
 write_to_file(File,Text) :-
 	open(File, write, Stream),
 	write(Stream, Text), nl,
@@ -10,18 +8,43 @@ write_to_file(File,Text) :-
 %L=[[Item1,Item2],[Item3,Item4]...].
 read_file(File) :-
 	open(File, read, Stream),
-	readLoop(Stream,String),
+	readLoop(Stream,Tokens),
 	close(Stream),
-	write(String),
-	processList(String,Struct).
+	processList(Tokens,CourseList),
+	write(CourseList).
 
 %processList takes in a list and cordons
 %its members into elements, taking a list
 %of form L=[Item1,Item2,...,Item(n)] and
 %processing it to turn into
 %L=[[Item1,Item2],[Item3,Item4]...].
-processList(String,Struct):-
-	write(stub).
+processList([],[]).
+processList(Tokens,CourseList):-
+	buildCourse(Tokens,TokensLeft,Course),
+	processList(TokensLeft,Rest),CourseList=[Course|Rest].
+
+buildCourse([H|T],TokensLeft,Course):-
+	setUpCourse(H,CompCourse),
+	readTillNoNum(T,TokensLeft,SL),
+	completeCourse(CompCourse,SL,Course).
+
+completeCourse((X,_),Y,(X,Y)).
+
+readTillNoNum([],_,[]).
+readTillNoNum([H|T],TokensLeft,SL):-
+	atom_number(H,NumVal),readTillNoNum(T,TokensLeft,Rest),SL=[NumVal|Rest];
+	TokensLeft = [H|T],SL=[].
+
+makeEqual(X,X).
+
+addToList(X,[],[X]).
+addToList(Head,Tail,[Head|Tail]).
+
+setUpCourse(H,(H,[])).
+makeMember(H,[H]).
+	
+%atom_number(H,NumValue),write("up here\n"),!;
+%write("down here\n"),!.
 
 %Using two SWI pre-defined functions and
 %one user defined function, readLoop() takes
