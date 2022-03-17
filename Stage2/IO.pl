@@ -1,4 +1,12 @@
-write_to_file(File,Text) :-
+%IO FILE: Kiril and Shiraz
+%The following file contains various
+%functors that perform the IO of the
+%imperative scheduler.
+
+%write_file does exactly as it sounds,
+%writing what gets passed in to the file
+%specified.
+write_file(File,Text) :-
 	open(File, write, Stream),
 	write(Stream, Text), nl,
 	close(Stream).
@@ -17,31 +25,34 @@ read_file(File) :-
 %its members into elements, taking a list
 %of form L=[Item1,Item2,...,Item(n)] and
 %processing it to turn into
-%L=[[Item1,Item2],[Item3,Item4]...].
+%L=[(Item1,Item2),(Item3,Item4)...].
 processList([],[]).
 processList(Tokens,CourseList):-
 	buildCourse(Tokens,TokensLeft,Course),
 	processList(TokensLeft,Rest),CourseList=[Course|Rest].
 
+%buildCourse takes in an array and results
+%in a split list that ends on the next occourance
+%of a non-integer member. The remaining (non-scouted)
+%list gets put into TokensLeft
 buildCourse([H|T],TokensLeft,Course):-
 	setUpCourse(H,CompCourse),
 	readTillNoNum(T,TokensLeft,SL),
 	completeCourse(CompCourse,SL,Course).
 
+%Matches the course name and student array into one.
 completeCourse((X,_),Y,(X,Y)).
 
+%readTillNoNum recursively adds to a list for students.
+%The recursion ends when the function reaches a point where
+%the element of the input array is not an integer.
 readTillNoNum([],_,[]).
 readTillNoNum([H|T],TokensLeft,SL):-
 	atom_number(H,NumVal),readTillNoNum(T,TokensLeft,Rest),SL=[NumVal|Rest];
 	TokensLeft = [H|T],SL=[].
 
-makeEqual(X,X).
-
-addToList(X,[],[X]).
-addToList(Head,Tail,[Head|Tail]).
-
+%Sets the structure of the Course Pair
 setUpCourse(H,(H,[])).
-makeMember(H,[H]).
 	
 %atom_number(H,NumValue),write("up here\n"),!;
 %write("down here\n"),!.
