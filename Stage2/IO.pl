@@ -14,13 +14,13 @@ write_file(File,Text) :-
 %readFile processes an input file and
 %turns it into form 
 %L=[[Item1,Item2],[Item3,Item4]...].
-read_file(File) :-
+read_file(File,CourseList) :-
 	open(File, read, Stream),
 	readLoop(Stream,Tokens),
 	checkIfEmpty(Tokens),
 	close(Stream),
-	processList(Tokens,CourseList),
-	write(CourseList).
+	processList(Tokens,CL),
+	CourseList=CL.
 
 %Checks if input file is empty.
 %Fails if the input is indeed empty.
@@ -62,9 +62,6 @@ readTillNoNum([H|T],TokensLeft,SL):-
 
 %Sets the structure of the Course Pair
 setUpCourse(H,(H,[])).
-	
-%atom_number(H,NumValue),write("up here\n"),!;
-%write("down here\n"),!.
 
 %Using two SWI pre-defined functions and
 %one user defined function, readLoop() takes
