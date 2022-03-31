@@ -7,8 +7,8 @@ addEntry -- no error checking: allows duplicate and
 )
 where
 emptySchedule :: Schedule
-emptySchedule = Sched [("",0)]
+emptySchedule = Sched []
 addEntry :: String -> Int -> Schedule -> Schedule
-addEntry str val schedule = Sched [(str,val)]
+addEntry str val (Sched lst) = Sched ((str,val):lst)
 data Schedule = Sched [(String,Int)]
     deriving (Show)
