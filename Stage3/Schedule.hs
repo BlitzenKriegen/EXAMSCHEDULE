@@ -2,7 +2,9 @@ module Schedule
 (
 Schedule, -- a "Schedule" ADT, with two public operations
 emptySchedule,
-addEntry -- no error checking: allows duplicate and
+addEntry,
+isEmptySched
+-- no error checking: allows duplicate and
 -- contradictory entries
 )
 where
@@ -11,6 +13,9 @@ emptySchedule = Sched []
 
 addEntry :: String -> Int -> Schedule -> Schedule
 addEntry str val (Sched lst) = Sched ((str,val):lst)
+
+isEmptySched :: Schedule -> Bool
+isEmptySched (Sched lst) = lst == [] 
 
 printResults :: String -> IO()
 printResults str = putStr str
