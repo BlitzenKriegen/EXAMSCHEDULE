@@ -3,7 +3,9 @@ module Schedule
 Schedule, -- a "Schedule" ADT, with two public operations
 emptySchedule,
 addEntry,
-isEmptySched
+isEmptySched,
+toString,
+printResults
 -- no error checking: allows duplicate and
 -- contradictory entries
 )
