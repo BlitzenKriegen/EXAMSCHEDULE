@@ -3,13 +3,14 @@ import Scheduler
 import Course
 import CourseData
 import Data.Char
+import RoomData
 
-oldSched :: CourseData -> Int -> IO()
+{-oldSched :: CourseData -> Int -> IO()
 oldSched info timeslot = putStr(toString(stripMaybe(schedule info timeslot)))
-
-sched :: FilePath -> Int -> IO()
-sched file val = readFile(file) >>= \str 
-                           -> putStr(toString(stripMaybe(schedule (processFile(words str)) val)))
+-}
+sched :: FilePath -> FilePath-> Int -> IO()
+sched course room val = readFile(course) >>= \str -> readFile(room) >>= \rm
+           -> putStr(toString(stripMaybe(schedule (processFile(words str)) (grabRooms(words rm)) val)))
 
 processFile :: [String] -> CourseData
 processFile [] = []
@@ -28,6 +29,15 @@ grabStudents (x:xs) = if stringIsInt x
                       else
                          []
 
+grabRooms :: [String] -> RoomData
+grabRooms [] = []
+grabRooms (x) = popRoom x:grabRooms(drop 2 x)
+
+popRoom :: [String] -> (String,Int)
+popRoom (x:y:zs) = if stringIsInt y
+                       then (x,read y :: Int)
+                   else
+                       error "Room formatted wrong"
 
 stringIsInt :: String -> Bool
 stringIsInt [] = True
