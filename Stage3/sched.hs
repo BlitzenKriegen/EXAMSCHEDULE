@@ -20,7 +20,10 @@ getLen :: (String,[Int]) -> Int
 getLen (_,b) = 1 + length b
 
 createClass :: [String] -> (String,[Int])
-createClass (x:xs) = (x,grabStudents xs)
+createClass (x:xs) = if (grabStudents xs) == []
+                        then error "Class is Empty!"
+                     else
+                        (x,grabStudents xs)
 
 grabStudents :: [String] -> [Int]
 grabStudents [] = []
@@ -31,13 +34,16 @@ grabStudents (x:xs) = if stringIsInt x
 
 grabRooms :: [String] -> RoomData
 grabRooms [] = []
-grabRooms (x) = popRoom x:grabRooms(drop 2 x)
+grabRooms (x) = if odd (length x) 
+                   then error "Rooms is missing data!"
+                else
+                   popRoom x:grabRooms(drop 2 x)
 
 popRoom :: [String] -> (String,Int)
 popRoom (x:y:zs) = if stringIsInt y
                        then (x,read y :: Int)
                    else
-                       error "Room formatted wrong"
+                       error "Room formatted wrong!"
 
 stringIsInt :: String -> Bool
 stringIsInt [] = True
@@ -45,4 +51,4 @@ stringIsInt (x:xs) = isDigit(x) && stringIsInt(xs)
 
 stripMaybe :: Maybe Schedule -> Schedule
 stripMaybe (Just (x)) = x
-stripMaybe Nothing = emptySchedule
+stripMaybe Nothing = error "Classes could not be resolved into a schedule"
